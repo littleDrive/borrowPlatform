@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.borrow.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.borrow.pojo.User" >
+    <id column="wechat_id" property="wechatId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="wg_num" property="wgNum" jdbcType="INTEGER" />
+    <result column="cwg_num" property="cwgNum" jdbcType="INTEGER" />
+    <result column="borrow_num" property="borrowNum" jdbcType="INTEGER" />
+    <result column="all_borrow_num" property="allBorrowNum" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    wechat_id, name, wg_num, cwg_num, borrow_num, all_borrow_num, address, credit
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.borrow.pojo.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where wechat_id = #{wechatId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where wechat_id = #{wechatId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.borrow.pojo.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.borrow.pojo.User" >
+    insert into user (wechat_id, name, wg_num, 
+      cwg_num, borrow_num, all_borrow_num, 
+      address, credit)
+    values (#{wechatId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{wgNum,jdbcType=INTEGER}, 
+      #{cwgNum,jdbcType=INTEGER}, #{borrowNum,jdbcType=INTEGER}, #{allBorrowNum,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR}, #{credit,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.borrow.pojo.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wechatId != null" >
+        wechat_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="wgNum != null" >
+        wg_num,
+      </if>
+      <if test="cwgNum != null" >
+        cwg_num,
+      </if>
+      <if test="borrowNum != null" >
+        borrow_num,
+      </if>
+      <if test="allBorrowNum != null" >
+        all_borrow_num,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wechatId != null" >
+        #{wechatId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="wgNum != null" >
+        #{wgNum,jdbcType=INTEGER},
+      </if>
+      <if test="cwgNum != null" >
+        #{cwgNum,jdbcType=INTEGER},
+      </if>
+      <if test="borrowNum != null" >
+        #{borrowNum,jdbcType=INTEGER},
+      </if>
+      <if test="allBorrowNum != null" >
+        #{allBorrowNum,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.borrow.pojo.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.wechatId != null" >
+        wechat_id = #{record.wechatId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wgNum != null" >
+        wg_num = #{record.wgNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.cwgNum != null" >
+        cwg_num = #{record.cwgNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.borrowNum != null" >
+        borrow_num = #{record.borrowNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.allBorrowNum != null" >
+        all_borrow_num = #{record.allBorrowNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.credit != null" >
+        credit = #{record.credit,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set wechat_id = #{record.wechatId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      wg_num = #{record.wgNum,jdbcType=INTEGER},
+      cwg_num = #{record.cwgNum,jdbcType=INTEGER},
+      borrow_num = #{record.borrowNum,jdbcType=INTEGER},
+      all_borrow_num = #{record.allBorrowNum,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      credit = #{record.credit,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.borrow.pojo.User" >
+    update user
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="wgNum != null" >
+        wg_num = #{wgNum,jdbcType=INTEGER},
+      </if>
+      <if test="cwgNum != null" >
+        cwg_num = #{cwgNum,jdbcType=INTEGER},
+      </if>
+      <if test="borrowNum != null" >
+        borrow_num = #{borrowNum,jdbcType=INTEGER},
+      </if>
+      <if test="allBorrowNum != null" >
+        all_borrow_num = #{allBorrowNum,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        credit = #{credit,jdbcType=TINYINT},
+      </if>
+    </set>
+    where wechat_id = #{wechatId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.borrow.pojo.User" >
+    update user
+    set name = #{name,jdbcType=VARCHAR},
+      wg_num = #{wgNum,jdbcType=INTEGER},
+      cwg_num = #{cwgNum,jdbcType=INTEGER},
+      borrow_num = #{borrowNum,jdbcType=INTEGER},
+      all_borrow_num = #{allBorrowNum,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      credit = #{credit,jdbcType=TINYINT}
+    where wechat_id = #{wechatId,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 自定义的sql语句 -->
+  <!-- 更新地址 -->
+ 
+</mapper>
